@@ -55,7 +55,7 @@ export const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
           <button
             type="button"
             key={key}
-            className="relative h-6 w-6 rounded-full"
+            className="cursor-pointer relative h-6 w-6 rounded-full"
             onClick={() => setTheme(key)}
             aria-label={label}
           >

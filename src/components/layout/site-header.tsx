@@ -1,11 +1,12 @@
 "use server";
 
-import { getSession } from "@/lib/session";
-import Link from "next/link";
-import { SearchTrigger } from "@/components/shared/search-trigger";
-import { Button } from "@/components/ui/button";
 import { MainNav } from "@/components/layout/main-nav";
 import { UserNav } from "@/components/layout/user-nav";
+import { SearchTrigger } from "@/components/shared/search-trigger";
+import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/ui/logo";
+import { getSession } from "@/lib/session";
+import Link from "next/link";
 
 export async function SiteHeader() {
   const session = await getSession();
@@ -14,8 +15,8 @@ export async function SiteHeader() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         <div className="flex items-center space-x-4">
-          <Link href="/" className="flex items-center space-x-2">
-            <img src="/logo.png" alt="Logo" className="rounded h-8 w-auto" />
+          <Link href="/" className="flex w-full items-center">
+            <Logo className="h-7 w-auto rounded" />
           </Link>
           <MainNav />
         </div>

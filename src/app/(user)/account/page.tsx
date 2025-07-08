@@ -1,8 +1,18 @@
 import { AccountSidebar } from "@/components/account/account-sidebar";
 import { AccountTabs } from "@/components/account/account-tabs";
-import { Button } from "@/components/ui/button";
 import { getSession } from "@/lib/session";
-import Link from "next/link";
+import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "Account",
+  description:
+    "Manage your SCM account, view your published components, and update your profile settings.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 interface UserComponent {
   name: string;
@@ -14,18 +24,9 @@ interface UserComponent {
 
 export default async function AccountPage() {
   const session = await getSession();
-  if (!session) {
-    return (
-      <div className="container mx-auto max-w-4xl py-10 text-center">
-        <h1 className="text-2xl font-bold mb-4">Authentication Required</h1>
-        <p className="text-muted-foreground mb-6">
-          Please sign in to access your account dashboard.
-        </p>
-        <Button asChild>
-          <Link href="/auth/sign-in">Sign In</Link>
-        </Button>
-      </div>
-    );
+
+  if (!session?.user) {
+    redirect("/auth/sign-in");
   }
 
   let userComponents: UserComponent[] = [];
@@ -48,10 +49,14 @@ export default async function AccountPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 py-8 w-full flex flex-col lg:flex-row gap-8">
-        <AccountSidebar user={session.user} />
-        <AccountTabs user={session.user} userComponents={userComponents} />
+    <div className="min-h-screen py-6 lg:py-10">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="lg:col-span-1">
+          <AccountSidebar user={session.user} />
+        </div>
+        <div className="lg:col-span-3">
+          <AccountTabs user={session.user} userComponents={userComponents} />
+        </div>
       </div>
     </div>
   );

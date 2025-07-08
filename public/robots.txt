@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+Disallow: /auth/
+Disallow: /account/
+Disallow: /api/
+
+Allow: /components/
+Allow: /profile/
+Allow: /docs/
+Allow: /publish/
+Allow: /community/ 

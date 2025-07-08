@@ -1,36 +1,48 @@
-"use client";
-
 import { SearchTrigger } from "@/components/shared/search-trigger";
 import { ApiComponent } from "@/lib/types";
+import type { Metadata } from "next";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
-export default function HomePage() {
-  const [recentComponents, setRecentComponents] = useState<ApiComponent[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+export const metadata: Metadata = {
+  title: "Home",
+  description:
+    "Discover, publish, and install shadcn-compatible components. Build and share components with the community using our GitHub-based registry.",
+  openGraph: {
+    title:
+      "Shadcn Component Manager - Build and share components with the community",
+    description:
+      "Discover, publish, and install shadcn-compatible components. Build and share components with the community using our GitHub-based registry.",
+    url: "/",
+  },
+  twitter: {
+    title:
+      "Shadcn Component Manager - Build and share components with the community",
+    description:
+      "Discover, publish, and install shadcn-compatible components. Build and share components with the community using our GitHub-based registry.",
+  },
+};
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const componentsRes = await fetch(
-          `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/components`,
-        );
+async function getRecentComponents(): Promise<ApiComponent[]> {
+  try {
+    const componentsRes = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/components`,
+      { next: { revalidate: 300 } },
+    );
 
-        if (!componentsRes.ok) {
-          throw new Error("Failed to fetch data");
-        }
-
-        const componentsData = await componentsRes.json();
-        setRecentComponents(componentsData.components.slice(0, 6));
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
+    if (!componentsRes.ok) {
+      throw new Error("Failed to fetch data");
     }
 
-    fetchData();
-  }, []);
+    const componentsData = await componentsRes.json();
+    return componentsData.components.slice(0, 6);
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+export default async function HomePage() {
+  const recentComponents = await getRecentComponents();
 
   return (
     <div className="container mx-auto max-w-7xl relative">
@@ -54,7 +66,7 @@ export default function HomePage() {
           Recently Updated
         </h2>
         <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {isLoading
+          {recentComponents.length === 0
             ? [...Array(6)].map((_, i) => (
                 <div
                   key={i}

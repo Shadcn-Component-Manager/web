@@ -1,25 +1,40 @@
-"use client";
-
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
-    CheckCircle,
-    Code,
-    Download,
-    FileText,
-    GitBranch,
-    Terminal,
-    Upload,
+  CheckCircle,
+  Code,
+  Download,
+  FileText,
+  GitBranch,
+  Terminal,
+  Upload,
 } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Publish Components",
+  description:
+    "Share your shadcn-compatible components with the community. Learn how to use the SCM CLI to create, publish, and manage your components with ease.",
+  openGraph: {
+    title: "Publish Components - Shadcn Component Manager",
+    description:
+      "Share your shadcn-compatible components with the community. Learn how to use the SCM CLI to create, publish, and manage your components with ease.",
+    url: "/publish",
+  },
+  twitter: {
+    title: "Publish Components - Shadcn Component Manager",
+    description:
+      "Share your shadcn-compatible components with the community. Learn how to use the SCM CLI to create, publish, and manage your components with ease.",
+  },
+};
 
 export default function PublishPage() {
   const steps = [
@@ -205,51 +220,22 @@ export default function PublishPage() {
 
         <Separator />
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Shadcn Schema Compliance</CardTitle>
-            <CardDescription>
-              SCM automatically generates files that conform to shadcn's
-              registry.json schema
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                Every component published through SCM automatically includes a
-                registry.json file that follows shadcn's exact schema. This
-                ensures your components work seamlessly with existing shadcn
-                projects.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">registry.json</Badge>
-                <Badge variant="secondary">registry-item.json</Badge>
-                <Badge variant="secondary">cssVars</Badge>
-                <Badge variant="secondary">Tailwind CSS</Badge>
-                <Badge variant="secondary">React</Badge>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-primary/5 border-primary/20">
-          <CardHeader>
-            <CardTitle className="text-center">Ready to Publish?</CardTitle>
-            <CardDescription className="text-center">
-              Join the community and share your components
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="text-center">
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild>
-                <Link href="/docs">View Documentation</Link>
-              </Button>
-              <Button variant="outline" asChild>
-                <Link href="/components">Browse Components</Link>
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="text-center space-y-4">
+          <h2 className="text-2xl font-semibold tracking-tight">
+            Ready to Get Started?
+          </h2>
+          <p className="text-muted-foreground">
+            Join the community and start sharing your components today.
+          </p>
+          <div className="flex gap-4 justify-center">
+            <Link href="/docs">
+              <Button variant="outline">View Documentation</Button>
+            </Link>
+            <Link href="/components">
+              <Button>Browse Components</Button>
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FaGithub, FaNpm } from "react-icons/fa6";
+import { Logo } from "../ui/logo";
 import { ThemeSwitcher } from "../ui/theme-switch";
 
 export function SiteFooter() {
@@ -14,11 +15,7 @@ export function SiteFooter() {
             href="/"
             className="flex items-center gap-2 text-2xl font-extrabold tracking-tight text-foreground"
           >
-            <img
-              src="/logo.png"
-              alt="SCM Logo"
-              className="h-8 w-auto rounded"
-            />
+            <Logo className="h-8 w-auto rounded" />
           </Link>
           <p className="text-muted-foreground text-sm max-w-xs text-center md:text-left">
             The luxury registry for shadcn/ui components. Discover, share, and

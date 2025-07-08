@@ -1,14 +1,14 @@
 /**
  * SignInPage Component
- * 
+ *
  * Handles user authentication via GitHub OAuth.
- * 
+ *
  * Features:
  * - Session checking and automatic redirect
  * - GitHub OAuth integration
  * - Loading states and error handling
  * - Responsive design with animations
- * 
+ *
  * @returns {JSX.Element} Sign-in page component
  */
 "use client";

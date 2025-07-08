@@ -1,10 +1,11 @@
-
 import { ComponentFileViewer } from "@/components/components/component-file-viewer";
 import { ComponentHeader } from "@/components/components/component-header";
 import { ComponentReadme } from "@/components/components/component-readme";
 import { ComponentSidebar } from "@/components/components/component-sidebar";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ApiComponent } from "@/lib/types";
+import { FileText } from "lucide-react";
+import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 
 interface ComponentPageProps {
@@ -17,10 +18,10 @@ interface ComponentPageProps {
   }>;
 }
 
-export default async function ComponentPage({
-  params,
-  searchParams,
-}: ComponentPageProps) {
+export async function generateMetadata(
+  { params, searchParams }: ComponentPageProps,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
   const { namespace, name } = await params;
   const { version } = await searchParams;
 
@@ -31,16 +32,104 @@ export default async function ComponentPage({
     url.searchParams.set("version", version);
   }
 
-  const res = await fetch(url.toString(), {
-    next: { revalidate: 300 },
-  });
+  try {
+    const res = await fetch(url.toString(), {
+      next: { revalidate: 300 },
+    });
 
-  if (!res.ok) {
+    if (!res.ok) {
+      return {
+        title: `${namespace}/${name} - Component Not Found`,
+        description: `The component ${namespace}/${name} could not be found in the registry.`,
+      };
+    }
+
+    const data = await res.json();
+    const component: ApiComponent = data.component;
+
+    const title = `${namespace}/${name} v${component.version}`;
+    const description =
+      component.description ||
+      `A shadcn-compatible component by ${namespace}. Install and use this component in your React projects.`;
+
+    return {
+      title,
+      description,
+      openGraph: {
+        title,
+        description,
+        url: `/components/${namespace}/${name}`,
+        type: "website",
+        images: [
+          {
+            url: `/api/og/component?namespace=${encodeURIComponent(namespace)}&name=${encodeURIComponent(name)}&version=${encodeURIComponent(component.version)}`,
+            width: 1200,
+            height: 630,
+            alt: `${title} - ${description}`,
+          },
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: [
+          `/api/og/component?namespace=${encodeURIComponent(namespace)}&name=${encodeURIComponent(name)}&version=${encodeURIComponent(component.version)}`,
+        ],
+      },
+      alternates: {
+        canonical: `/components/${namespace}/${name}`,
+      },
+    };
+  } catch (error) {
+    return {
+      title: `${namespace}/${name} - Component Not Found`,
+      description: `The component ${namespace}/${name} could not be found in the registry.`,
+    };
+  }
+}
+
+async function getComponent(
+  namespace: string,
+  name: string,
+  version?: string,
+): Promise<ApiComponent | null> {
+  try {
+    const url = new URL(
+      `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/components/${namespace}/${name}`,
+    );
+    if (version) {
+      url.searchParams.set("version", version);
+    }
+
+    const res = await fetch(url.toString(), {
+      next: { revalidate: 300 },
+    });
+
+    if (!res.ok) {
+      return null;
+    }
+
+    const data = await res.json();
+    return data.component;
+  } catch (error) {
+    console.error("Failed to fetch component:", error);
+    return null;
+  }
+}
+
+export default async function ComponentPage({
+  params,
+  searchParams,
+}: ComponentPageProps) {
+  const { namespace, name } = await params;
+  const { version } = await searchParams;
+
+  const component = await getComponent(namespace, name, version);
+
+  if (!component) {
     notFound();
   }
-
-  const data = await res.json();
-  const component: ApiComponent = data.component;
 
   return (
     <div className="min-h-screen py-6 lg:py-10">
@@ -52,10 +141,13 @@ export default async function ComponentPage({
 
           {component.docs && (
             <Card>
-              <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="h-5 w-5" />
                   Setup Instructions
-                </h2>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
                 <pre className="whitespace-pre-wrap text-sm bg-muted p-4 rounded-lg overflow-x-auto">
                   {component.docs}
                 </pre>

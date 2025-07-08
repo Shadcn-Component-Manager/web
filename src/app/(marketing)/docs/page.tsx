@@ -1,9 +1,25 @@
-"use client";
-
 import { CliCommands } from "@/components/docs/cli-commands";
 import { ContributingGuidelines } from "@/components/docs/contributing-guidelines";
 import { FaqSection } from "@/components/docs/faq-section";
 import { HelpSection } from "@/components/docs/help-section";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Documentation",
+  description:
+    "Learn how to use SCM CLI, understand the registry schema, and contribute to the community. Complete documentation for Shadcn Component Manager.",
+  openGraph: {
+    title: "Documentation - Shadcn Component Manager",
+    description:
+      "Learn how to use SCM CLI, understand the registry schema, and contribute to the community. Complete documentation for Shadcn Component Manager.",
+    url: "/docs",
+  },
+  twitter: {
+    title: "Documentation - Shadcn Component Manager",
+    description:
+      "Learn how to use SCM CLI, understand the registry schema, and contribute to the community. Complete documentation for Shadcn Component Manager.",
+  },
+};
 
 export default function DocsPage() {
   return (

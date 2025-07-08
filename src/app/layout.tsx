@@ -16,9 +16,75 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Shadcn Component Manager",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+  ),
+  title: {
+    default: "Shadcn Component Manager",
+    template: "%s | Shadcn Component Manager",
+  },
   description:
-    "Shadcn Component Manager is a open-source CLI tool and registry ecosystem designed to extend shadcn's component model, enabling developers to create, share, and install UI components with ease.",
+    "Shadcn Component Manager is an open-source CLI tool and registry ecosystem designed to extend shadcn's component model, enabling developers to create, share, and install UI components with ease.",
+  keywords: [
+    "shadcn",
+    "components",
+    "ui",
+    "react",
+    "typescript",
+    "tailwind",
+    "registry",
+    "cli",
+    "developer tools",
+    "open source",
+  ],
+  authors: [{ name: "Shadcn Component Manager Team" }],
+  creator: "Shadcn Component Manager",
+  publisher: "Shadcn Component Manager",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    title: "Shadcn Component Manager",
+    description:
+      "Build and share shadcn-compatible components with the community. Discover, publish, and install UI components with ease.",
+    siteName: "Shadcn Component Manager",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Shadcn Component Manager - Build and share components with the community",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Shadcn Component Manager",
+    description:
+      "Build and share shadcn-compatible components with the community. Discover, publish, and install UI components with ease.",
+    images: ["/og-image.png"],
+    creator: "@shadcn",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: "/",
+  },
+  category: "technology",
 };
 
 export const viewport: Viewport = {

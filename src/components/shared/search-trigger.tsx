@@ -8,6 +8,14 @@ interface SearchTriggerProps {
   variant?: "header" | "homepage";
 }
 
+let globalSearchOpen = false;
+const listeners: Array<(open: boolean) => void> = [];
+
+function setGlobalSearchOpen(open: boolean) {
+  globalSearchOpen = open;
+  listeners.forEach((listener) => listener(open));
+}
+
 function getShortcutKey() {
   if (typeof window === "undefined") return "Ctrl";
   return /Mac|iPhone|iPad|iPod/.test(window.navigator.userAgent) ? "⌘" : "Ctrl";
@@ -22,18 +30,33 @@ export function SearchTrigger({ variant = "header" }: SearchTriggerProps) {
   }, []);
 
   useEffect(() => {
+    listeners.push(setOpen);
+
+    return () => {
+      const index = listeners.indexOf(setOpen);
+      if (index > -1) {
+        listeners.splice(index, 1);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if ((e.key === "k" || e.key === "K") && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        setOpen((prev) => {
-          if (!prev) return true;
-          return prev;
-        });
+        if (!globalSearchOpen) {
+          setGlobalSearchOpen(true);
+        }
       }
     };
     window.addEventListener("keydown", down);
     return () => window.removeEventListener("keydown", down);
   }, []);
+
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+    setGlobalSearchOpen(newOpen);
+  };
 
   const buttonClass =
     variant === "homepage"
@@ -45,7 +68,7 @@ export function SearchTrigger({ variant = "header" }: SearchTriggerProps) {
       <Button
         variant="outline"
         className={buttonClass}
-        onClick={() => setOpen(true)}
+        onClick={() => handleOpenChange(true)}
         type="button"
       >
         <span className="hidden lg:inline-flex">Search components...</span>
@@ -58,7 +81,7 @@ export function SearchTrigger({ variant = "header" }: SearchTriggerProps) {
           <span>K</span>
         </kbd>
       </Button>
-      <ComponentSearch open={open} onOpenChange={setOpen} />
+      <ComponentSearch open={open} onOpenChange={handleOpenChange} />
     </>
   );
 }
