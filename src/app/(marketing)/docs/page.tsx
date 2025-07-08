@@ -19,7 +19,6 @@ export default function DocsPage() {
       </div>
 
       <div className="space-y-12">
-        {/* CLI Commands Section */}
         <section>
           <div className="mb-6">
             <h2 className="text-2xl font-semibold tracking-tight">
@@ -32,7 +31,6 @@ export default function DocsPage() {
           <CliCommands />
         </section>
 
-        {/* Contributing Section */}
         <section>
           <div className="mb-6">
             <h2 className="text-2xl font-semibold tracking-tight">
@@ -45,7 +43,6 @@ export default function DocsPage() {
           <ContributingGuidelines />
         </section>
 
-        {/* FAQ Section */}
         <section>
           <div className="mb-6">
             <h2 className="text-2xl font-semibold tracking-tight">FAQ</h2>
@@ -56,7 +53,6 @@ export default function DocsPage() {
           <FaqSection />
         </section>
 
-        {/* Help Section */}
         <section>
           <HelpSection />
         </section>

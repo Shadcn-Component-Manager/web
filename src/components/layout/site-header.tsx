@@ -1,9 +1,11 @@
+"use server";
+
 import { getSession } from "@/lib/session";
 import Link from "next/link";
-import { SearchTrigger } from "../shared/search-trigger";
-import { Button } from "../ui/button";
-import { UserNav } from "./user-nav";
-import { MainNav } from "./main-nav";
+import { SearchTrigger } from "@/components/shared/search-trigger";
+import { Button } from "@/components/ui/button";
+import { MainNav } from "@/components/layout/main-nav";
+import { UserNav } from "@/components/layout/user-nav";
 
 export async function SiteHeader() {
   const session = await getSession();

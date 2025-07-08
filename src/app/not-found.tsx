@@ -34,15 +34,6 @@ export default function NotFound() {
                 Browse Components
               </Link>
             </Button>
-
-            <Button
-              variant="ghost"
-              onClick={() => window.history.back()}
-              className="w-full"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Go Back
-            </Button>
           </div>
         </CardContent>
       </Card>

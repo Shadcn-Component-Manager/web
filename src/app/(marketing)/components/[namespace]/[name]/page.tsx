@@ -1,3 +1,4 @@
+
 import { ComponentFileViewer } from "@/components/components/component-file-viewer";
 import { ComponentHeader } from "@/components/components/component-header";
 import { ComponentReadme } from "@/components/components/component-readme";
@@ -38,15 +39,14 @@ export default async function ComponentPage({
     notFound();
   }
 
-  const component: ApiComponent = await res.json();
+  const data = await res.json();
+  const component: ApiComponent = data.component;
 
   return (
     <div className="min-h-screen py-6 lg:py-10">
       <ComponentHeader component={component} />
 
-      {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
-        {/* Main Content */}
         <div className="lg:col-span-3 space-y-6">
           <ComponentReadme component={component} />
 
@@ -66,7 +66,6 @@ export default async function ComponentPage({
           <ComponentFileViewer component={component} />
         </div>
 
-        {/* Sidebar */}
         <div className="space-y-4">
           <ComponentSidebar component={component} />
         </div>

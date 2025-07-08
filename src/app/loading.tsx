@@ -7,28 +7,19 @@ export default function Loading() {
       <Card className="max-w-md w-full">
         <CardContent className="p-6">
           <div className="space-y-4">
-            {/* Logo/Icon skeleton */}
             <div className="flex justify-center">
               <Skeleton className="w-16 h-16 rounded-full" />
             </div>
 
-            {/* Title skeleton */}
             <div className="space-y-2">
               <Skeleton className="h-8 w-3/4 mx-auto" />
               <Skeleton className="h-4 w-1/2 mx-auto" />
             </div>
 
-            {/* Content skeleton */}
             <div className="space-y-3">
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-5/6" />
               <Skeleton className="h-4 w-4/6" />
-            </div>
-
-            {/* Button skeleton */}
-            <div className="space-y-2 pt-4">
-              <Skeleton className="h-10 w-full" />
-              <Skeleton className="h-10 w-full" />
             </div>
           </div>
         </CardContent>

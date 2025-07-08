@@ -21,9 +21,7 @@ export default function HomePage() {
         }
 
         const componentsData = await componentsRes.json();
-
-        // Assuming the API returns components sorted by recent first
-        setRecentComponents(componentsData.slice(0, 6));
+        setRecentComponents(componentsData.components.slice(0, 6));
       } catch (error) {
         console.error(error);
       } finally {

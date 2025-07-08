@@ -86,20 +86,6 @@ export function UserStats({ userComponents }: UserStatsProps) {
           </p>
         </CardContent>
       </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Timer className="h-5 w-5" />
-            Days Since Joined
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-lg font-semibold">{daysSinceJoined}</div>
-          <p className="text-sm text-muted-foreground">
-            Since your first publish
-          </p>
-        </CardContent>
-      </Card>
       {mostUsedCategory && (
         <Card>
           <CardHeader>

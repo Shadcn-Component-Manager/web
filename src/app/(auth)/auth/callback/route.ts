@@ -1,13 +1,28 @@
+/**
+ * GET /auth/callback
+ * Handles GitHub OAuth callback and creates user session.
+ *
+ * @param {Request} request - The incoming OAuth callback request
+ * @returns {Promise<NextResponse>} Redirect response with session cookie
+ *
+ * Query Parameters:
+ * - code: string - OAuth authorization code from GitHub
+ * - next: string - Redirect URL after successful authentication
+ * - error: string - OAuth error code (if any)
+ * - error_description: string - OAuth error description (if any)
+ *
+ * Success Response: Redirect to next URL with session cookie
+ * Error Response: Redirect to sign-in page with error parameters
+ */
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
-  const next = requestUrl.searchParams.get("next") || "/dashboard";
+  const next = requestUrl.searchParams.get("next") || "/account";
   const error = requestUrl.searchParams.get("error");
   const errorDescription = requestUrl.searchParams.get("error_description");
 
-  // Handle OAuth errors
   if (error) {
     return NextResponse.redirect(
       new URL(
@@ -24,9 +39,12 @@ export async function GET(request: Request) {
   }
 
   try {
-    // Exchange code for access token
     const clientId = process.env.GITHUB_CLIENT_ID;
     const clientSecret = process.env.GITHUB_CLIENT_SECRET;
+
+    if (!clientId || !clientSecret) {
+      throw new Error("GitHub OAuth configuration is missing");
+    }
 
     const tokenResponse = await fetch(
       "https://github.com/login/oauth/access_token",
@@ -44,6 +62,10 @@ export async function GET(request: Request) {
       },
     );
 
+    if (!tokenResponse.ok) {
+      throw new Error("Failed to exchange code for token");
+    }
+
     const tokenData = await tokenResponse.json();
 
     if (tokenData.error) {
@@ -52,7 +74,10 @@ export async function GET(request: Request) {
 
     const accessToken = tokenData.access_token;
 
-    // Get user info from GitHub
+    if (!accessToken) {
+      throw new Error("No access token received from GitHub");
+    }
+
     const userResponse = await fetch("https://api.github.com/user", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -61,41 +86,46 @@ export async function GET(request: Request) {
     });
 
     if (!userResponse.ok) {
-      throw new Error("Failed to fetch user data");
+      throw new Error("Failed to fetch user data from GitHub");
     }
 
     const userData = await userResponse.json();
 
-    // Create a simple session token (in production, you might want to use JWT)
+    if (!userData.id || !userData.login) {
+      throw new Error("Invalid user data received from GitHub");
+    }
+
     const sessionData = {
       accessToken,
       user: {
         id: userData.id,
         login: userData.login,
-        name: userData.name,
+        name: userData.name || userData.login,
         email: userData.email,
         avatar_url: userData.avatar_url,
       },
       expiresAt: Date.now() + 8 * 60 * 60 * 1000, // 8 hours
+      createdAt: Date.now(),
     };
 
-    // Store session data in a secure cookie
     const response = NextResponse.redirect(new URL(next, requestUrl.origin));
 
-    // Set secure cookie with session data
     response.cookies.set("scm_session", JSON.stringify(sessionData), {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge: 8 * 60 * 60, // 8 hours
+      path: "/",
     });
 
     return response;
   } catch (error: any) {
     console.error("OAuth callback error:", error);
+
+    const errorMessage = error.message || "An unknown error occurred";
     return NextResponse.redirect(
       new URL(
-        `/auth/sign-in?error=unknown&message=${encodeURIComponent(error.message)}`,
+        `/auth/sign-in?error=unknown&message=${encodeURIComponent(errorMessage)}`,
         requestUrl.origin,
       ),
     );

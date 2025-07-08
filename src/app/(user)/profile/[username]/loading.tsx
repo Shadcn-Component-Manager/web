@@ -5,7 +5,6 @@ export default function ProfileLoading() {
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 w-full py-8 flex flex-col gap-8">
-        {/* Profile Header skeleton */}
         <div className="flex flex-col lg:flex-row gap-6 items-start">
           <div className="flex items-center gap-4">
             <Skeleton className="w-20 h-20 rounded-full" />
@@ -21,9 +20,7 @@ export default function ProfileLoading() {
           </div>
         </div>
 
-        {/* Main Content Grid */}
         <div className="flex flex-col lg:flex-row gap-8 w-full">
-          {/* Sidebar skeleton */}
           <aside className="w-full lg:w-1/3 xl:w-1/4 flex-shrink-0 lg:sticky lg:top-24 space-y-6 mb-8 lg:mb-0">
             <Card>
               <CardHeader>
@@ -40,7 +37,6 @@ export default function ProfileLoading() {
             </Card>
           </aside>
 
-          {/* Main Content skeleton */}
           <main className="flex-1 min-w-0">
             <Card>
               <CardHeader>

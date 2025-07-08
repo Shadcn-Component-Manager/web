@@ -19,7 +19,6 @@ interface ErrorProps {
 
 export default function CommunityError({ error, reset }: ErrorProps) {
   useEffect(() => {
-    // Log the error to an error reporting service
     console.error("Community page error:", error);
   }, [error]);
 

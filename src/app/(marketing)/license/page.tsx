@@ -1,18 +1,17 @@
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Calendar, Code, ExternalLink, Mail, Scale, Users } from "lucide-react";
+import { Calendar, Code, ExternalLink, Scale, Users } from "lucide-react";
 
 export default function LicensePage() {
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col items-center text-center space-y-4">
@@ -30,7 +29,6 @@ export default function LicensePage() {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           <Card>
@@ -210,7 +208,6 @@ export default function LicensePage() {
             </CardContent>
           </Card>
 
-          {/* Footer Actions */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12 pt-8 border-t">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Users className="w-4 h-4" />

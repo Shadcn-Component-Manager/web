@@ -19,7 +19,7 @@ export default function ComponentsPage() {
           throw new Error("Failed to fetch components");
         }
         const data = await res.json();
-        setComponents(data);
+        setComponents(data.components);
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -45,8 +45,7 @@ export default function ComponentsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {isLoading
-          ? // Loading skeletons
-            [...Array(9)].map((_, i) => (
+          ? [...Array(9)].map((_, i) => (
               <div
                 key={i}
                 className="rounded-lg border bg-card p-4 animate-pulse"
@@ -56,8 +55,7 @@ export default function ComponentsPage() {
                 <div className="h-4 w-1/3 bg-muted rounded mt-4" />
               </div>
             ))
-          : // Actual components
-            components.map((component) => (
+          : components.map((component) => (
               <Link
                 key={component.name}
                 href={`/components/${component.author}/${component.name}`}

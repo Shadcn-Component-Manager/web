@@ -28,7 +28,6 @@ export default async function AccountPage() {
     );
   }
 
-  // Fetch user's published components from registry
   let userComponents: UserComponent[] = [];
   try {
     const userComponentsRes = await fetch(
@@ -41,7 +40,8 @@ export default async function AccountPage() {
       },
     );
     if (userComponentsRes.ok) {
-      userComponents = await userComponentsRes.json();
+      const data = await userComponentsRes.json();
+      userComponents = data.components;
     }
   } catch (error) {
     console.error("Failed to fetch user components:", error);

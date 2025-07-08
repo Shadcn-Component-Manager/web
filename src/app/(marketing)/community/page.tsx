@@ -35,17 +35,15 @@ export default function CommunityPage() {
   useEffect(() => {
     async function fetchCommunityData() {
       try {
-        // Fetch all components from the registry
         const componentsRes = await fetch(
           `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/components`,
         );
         if (componentsRes.ok) {
           const componentsData = await componentsRes.json();
-          setComponents(componentsData);
+          setComponents(componentsData.components);
 
-          // Calculate authors and their component counts
           const authorMap = new Map<string, number>();
-          componentsData.forEach((component: RegistryComponent) => {
+          componentsData.components.forEach((component: RegistryComponent) => {
             const count = authorMap.get(component.author) || 0;
             authorMap.set(component.author, count + 1);
           });
@@ -81,7 +79,6 @@ export default function CommunityPage() {
         </p>
       </div>
 
-      {/* Registry Stats */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-12">
         <Card>
           <CardContent className="p-6 text-center">
@@ -127,7 +124,6 @@ export default function CommunityPage() {
       </div>
 
       <div className="grid gap-8 lg:grid-cols-2">
-        {/* Top Contributors */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -195,7 +191,6 @@ export default function CommunityPage() {
           </CardContent>
         </Card>
 
-        {/* Recent Components */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -289,7 +284,6 @@ export default function CommunityPage() {
 
       <Separator className="my-12" />
 
-      {/* Get Started Section */}
       <div className="text-center">
         <h2 className="text-2xl font-bold mb-4">Ready to contribute?</h2>
         <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">

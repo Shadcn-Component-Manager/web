@@ -2,11 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
 } from "@/components/ui/card";
 import { AlertTriangle, Package, RefreshCw } from "lucide-react";
 import Link from "next/link";
@@ -19,7 +19,6 @@ interface ErrorProps {
 
 export default function ComponentsError({ error, reset }: ErrorProps) {
   useEffect(() => {
-    // Log the error to an error reporting service
     console.error("Components page error:", error);
   }, [error]);
 

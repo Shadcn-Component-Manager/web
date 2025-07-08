@@ -7,19 +7,11 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { Input } from "@/components/ui/input";
 import { ApiComponent } from "@/lib/types";
-import {
-  Calendar,
-  Eye,
-  Search,
-  Sparkles,
-  Star,
-  Users,
-  Zap,
-} from "lucide-react";
+import { Calendar, Eye, Search, Sparkles, Star, Users } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Input } from "@/components/ui/input";
 
 interface ComponentSearchProps {
   open: boolean;
@@ -42,7 +34,7 @@ export function ComponentSearch({ open, onOpenChange }: ComponentSearchProps) {
         );
         if (res.ok) {
           const data = await res.json();
-          setComponents(data);
+          setComponents(data.components);
         }
       } catch (error) {
         console.error("Failed to fetch components for search", error);
@@ -96,8 +88,12 @@ export function ComponentSearch({ open, onOpenChange }: ComponentSearchProps) {
   }, [open]);
 
   return (
-    <CommandDialog open={open} onOpenChange={onOpenChange}>
-      <div className="relative w-full max-w-4xl max-h-[80vh] overflow-hidden rounded border">
+    <CommandDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      className="max-w-5xl"
+    >
+      <div className="relative w-full max-w-5xl max-h-[80vh] overflow-hidden rounded border">
         {/* Header Section */}
         <div className="relative p-6 border-b">
           <div className="flex items-center gap-3 mb-6">

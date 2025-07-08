@@ -5,13 +5,11 @@ import { GitFork, Users } from "lucide-react";
 export default function CommunityLoading() {
   return (
     <div className="container mx-auto max-w-7xl py-10">
-      {/* Header Skeleton */}
       <div className="text-center mb-12">
         <div className="h-10 w-1/3 bg-muted rounded animate-pulse mx-auto" />
         <div className="h-6 w-1/2 bg-muted rounded animate-pulse mx-auto mt-4" />
       </div>
 
-      {/* Registry Stats Skeleton */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-12">
         {[...Array(3)].map((_, i) => (
           <Card key={i}>
@@ -27,7 +25,6 @@ export default function CommunityLoading() {
       </div>
 
       <div className="grid gap-8 lg:grid-cols-2">
-        {/* Top Contributors Skeleton */}
         <Card>
           <CardHeader>
             <div className="flex items-center gap-2">
@@ -58,7 +55,6 @@ export default function CommunityLoading() {
           </CardContent>
         </Card>
 
-        {/* Recent Components Skeleton */}
         <Card>
           <CardHeader>
             <div className="flex items-center gap-2">
@@ -95,7 +91,6 @@ export default function CommunityLoading() {
 
       <Separator className="my-12" />
 
-      {/* Get Started Section Skeleton */}
       <div className="text-center">
         <div className="h-8 w-48 bg-muted rounded animate-pulse mx-auto mb-4" />
         <div className="h-5 w-96 bg-muted rounded animate-pulse mx-auto mb-6" />

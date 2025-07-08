@@ -10,8 +10,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ThemeSwitcher } from "@/components/ui/theme-switch";
-import { User } from "@/lib/session";
-import { ExternalLink, LogOut, Settings, User as UserIcon } from "lucide-react";
+import type { User } from "@/lib/session";
+import { LogOut, Settings, User as UserIcon } from "lucide-react";
 import Link from "next/link";
 
 interface UserNavProps {
