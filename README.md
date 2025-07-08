@@ -1,5 +1,11 @@
 # Shadcn Component Manager Web
 
+[![Deploy Status](https://img.shields.io/badge/Deploy-Vercel-blue.svg)](https://scm-registry.vercel.app)
+[![Next.js](https://img.shields.io/badge/Next.js-14-black.svg)](https://nextjs.org/)
+[![GitHub stars](https://img.shields.io/github/stars/Shadcn-Component-Manager/web.svg?style=social&label=Star)](https://github.com/Shadcn-Component-Manager/web)
+[![GitHub issues](https://img.shields.io/github/issues/Shadcn-Component-Manager/web.svg)](https://github.com/Shadcn-Component-Manager/web/issues)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 The official web interface for the Shadcn Component Manager (SCM). Browse, search, and manage shadcn/ui components through a modern web application.
 
 ## Overview
