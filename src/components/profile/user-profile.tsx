@@ -37,7 +37,7 @@ export function UserProfile({ user, username }: UserProfileProps) {
   };
 
   return (
-    <Card className="w-full max-w-full p-0 border bg-background">
+    <Card className="w-full max-w-full p-0 border">
       <div className="flex flex-col md:flex-row items-center md:items-start gap-6 px-6 py-8">
         {/* Avatar */}
         <div className="flex-shrink-0 flex items-center justify-center w-full md:w-auto">

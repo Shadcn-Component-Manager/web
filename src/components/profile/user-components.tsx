@@ -57,7 +57,7 @@ export function UserComponents({ components, username }: UserComponentsProps) {
         {components.map((component, index) => (
           <Card
             key={index}
-            className="gap-0 transition-shadow hover:shadow-lg border border-border bg-background"
+            className="gap-0 transition-shadow hover:shadow-lg border border-border"
           >
             <CardHeader className="pb-3">
               <div className="flex items-start justify-between gap-2">

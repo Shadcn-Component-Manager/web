@@ -8,7 +8,7 @@ interface UserProfileProps {
 
 export function UserProfile({ user }: UserProfileProps) {
   return (
-    <Card className="w-full p-6">
+    <Card className="w-full p-6 border">
       <div className="flex flex-col items-center justify-center gap-3">
         <Avatar className="h-16 w-16 border-2 border-border">
           <AvatarImage src={user.avatar_url} alt={`@${user.login}`} />

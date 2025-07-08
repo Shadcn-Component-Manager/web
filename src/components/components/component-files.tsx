@@ -1,35 +1,18 @@
 "use client";
 
+import { CopyButton } from "@/components/shared/copy-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ApiComponent } from "@/lib/types";
-import {
-  Check,
-  Copy,
-  Download,
-  ExternalLink,
-  FileCode,
-  FileText,
-} from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
+import { Download, ExternalLink, FileCode, FileText } from "lucide-react";
 
 interface ComponentFilesProps {
   component: ApiComponent;
 }
 
 export function ComponentFiles({ component }: ComponentFilesProps) {
-  const [copiedFile, setCopiedFile] = useState<string | null>(null);
-
-  const handleCopyFile = (filePath: string, content: string) => {
-    navigator.clipboard.writeText(content);
-    setCopiedFile(filePath);
-    toast.success("File content copied to clipboard");
-    setTimeout(() => setCopiedFile(null), 2000);
-  };
-
   const getFileIcon = (filePath: string) => {
     if (filePath.endsWith(".tsx") || filePath.endsWith(".ts"))
       return <FileCode className="h-4 w-4" />;
@@ -88,19 +71,7 @@ export function ComponentFiles({ component }: ComponentFilesProps) {
                     </span>
                   </div>
                   <div className="flex gap-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() =>
-                        handleCopyFile(file.path, file.content || "")
-                      }
-                    >
-                      {copiedFile === file.path ? (
-                        <Check className="h-4 w-4" />
-                      ) : (
-                        <Copy className="h-4 w-4" />
-                      )}
-                    </Button>
+                    <CopyButton text={file.content || ""} />
                     <Button variant="ghost" size="sm" asChild>
                       <a
                         href={`https://github.com/Shadcn-Component-Manager/registry/blob/main/components/${component.author}/${component.name}/${component.version}/${file.path}`}

@@ -1,5 +1,6 @@
 "use client";
 
+import { CopyButton } from "@/components/shared/copy-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,21 +10,14 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ApiComponent } from "@/lib/types";
-import { Check, Copy, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 interface FileHeaderProps {
   file: { path: string; content?: string };
   component: ApiComponent;
-  onCopy: () => void;
-  copied: boolean;
 }
 
-export function FileHeader({
-  file,
-  component,
-  onCopy,
-  copied,
-}: FileHeaderProps) {
+export function FileHeader({ file, component }: FileHeaderProps) {
   const getFileType = (filePath: string) => {
     if (filePath.endsWith(".tsx")) return "TSX";
     if (filePath.endsWith(".ts")) return "TS";
@@ -36,7 +30,7 @@ export function FileHeader({
   };
 
   return (
-    <div className="flex items-center justify-between px-3 py-1.5 border-b bg-muted/30">
+    <div className="flex items-center justify-between px-3 py-1.5 border-b bg-muted/50">
       <div className="flex items-center gap-2 min-w-0">
         <Badge variant="outline" className="text-xs">
           {getFileType(file.path)}
@@ -49,18 +43,7 @@ export function FileHeader({
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onCopy}
-                className="h-8 w-8 p-0"
-              >
-                {copied ? (
-                  <Check className="h-3 w-3" />
-                ) : (
-                  <Copy className="h-3 w-3" />
-                )}
-              </Button>
+              <CopyButton text={file.content || ""} />
             </TooltipTrigger>
             <TooltipContent>Copy file content</TooltipContent>
           </Tooltip>

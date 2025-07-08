@@ -72,14 +72,14 @@ export function SiteFooter() {
         </div>
         {/* Repositories */}
         <div className="flex flex-col items-center md:items-start gap-2 flex-1 min-w-[180px]">
-          <span className="font-semibold text-lg mb-1">Repositories</span>
+          <span className="font-semibold text-lg mb-1">SCM Tooling</span>
           <a
             href="https://github.com/Shadcn-Component-Manager/web"
             target="_blank"
             rel="noopener"
             className="text-muted-foreground hover:text-foreground transition-colors text-sm"
           >
-            Web (Next.js)
+            Web Repo
           </a>
           <a
             href="https://github.com/Shadcn-Component-Manager/scm"
@@ -87,7 +87,7 @@ export function SiteFooter() {
             rel="noopener"
             className="text-muted-foreground hover:text-foreground transition-colors text-sm"
           >
-            CLI (scm)
+            CLI Repo
           </a>
           <a
             href="https://github.com/Shadcn-Component-Manager/registry"
@@ -95,7 +95,7 @@ export function SiteFooter() {
             rel="noopener"
             className="text-muted-foreground hover:text-foreground transition-colors text-sm"
           >
-            Registry
+            Registry Repo
           </a>
           <a
             href="https://www.npmjs.com/package/@shadcn-component-manager/scm"

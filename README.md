@@ -1,24 +1,50 @@
-# Shadcn Component Manager Website
+# Shadcn Component Manager Web
 
-The official web interface for the Shadcn Component Manager (SCM). Browse, search, and manage shadcn/ui components through a beautiful, modern web application.
+The official web interface for the Shadcn Component Manager (SCM). Browse, search, and manage shadcn/ui components through a modern web application.
 
 ## Overview
 
-This is a Next.js 14 application that provides a web interface for the SCM registry. It allows users to discover, preview, and install components without using the CLI tool.
+Next.js 14 application providing a web interface for the SCM registry. Users can discover, preview, and install components without using the CLI tool.
 
 ## Features
 
-- **Component Browser**: Browse all available components with filtering and sorting
-- **Search**: Advanced search with category and author filters
-- **Component Previews**: View component code and documentation
-- **User Authentication**: GitHub OAuth integration
-- **Component Publishing**: Web-based component publishing (coming soon)
-- **Responsive Design**: Works on desktop and mobile devices
-- **Dark Mode**: Built-in theme switching
+- Component browser with filtering and sorting
+- Advanced search with category and author filters
+- Component code and documentation previews
+- GitHub OAuth authentication
+- Web-based component publishing
+- Responsive design for desktop and mobile
+- Dark mode theme switching
+
+## Development
+
+### Setup
+
+```bash
+npm install
+npm run dev
+```
+
+### Build
+
+```bash
+npm run build
+npm start
+```
+
+### Environment Variables
+
+```env
+GITHUB_CLIENT_ID=your_github_client_id
+GITHUB_CLIENT_SECRET=your_github_client_secret
+
+GITHUB_TOKEN=your_github_access_token
+
+NEXT_PUBLIC_GITHUB_CLIENT_ID=your_github_client_id
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
 
 ## Contributing
-
-### Development Workflow
 
 1. Fork the repository
 2. Create a feature branch
@@ -29,10 +55,10 @@ This is a Next.js 14 application that provides a web interface for the SCM regis
 ### Code Standards
 
 - Use TypeScript for all new code
-- Follow the existing code style
+- Follow existing code style
 - Add TSDoc comments for functions
 - Write meaningful commit messages
-- Test your changes thoroughly
+- Test changes thoroughly
 
 ## License
 

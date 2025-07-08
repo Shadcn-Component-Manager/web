@@ -4,7 +4,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ApiComponent } from "@/lib/types";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
-import { toast } from "sonner";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -14,7 +13,6 @@ import { ScrollArea } from "../ui/scroll-area";
 import { FileHeader } from "./file-header";
 import { FileTree } from "./file-tree";
 
-// Dynamically import shiki for SSR compatibility
 const Shiki = dynamic(() => import("@/components/components/shiki-viewer"), {
   ssr: false,
 });
@@ -23,7 +21,6 @@ interface ComponentFileViewerProps {
   component: ApiComponent;
 }
 
-// Reuse the tree building logic from the existing component
 function buildTree(files: { path: string; content?: string }[]): any[] {
   const root: Record<string, any> = {};
   for (const file of files) {
@@ -60,7 +57,6 @@ export function ComponentFileViewer({ component }: ComponentFileViewerProps) {
   const [selectedFile, setSelectedFile] = useState<string | undefined>(
     undefined,
   );
-  const [copied, setCopied] = useState(false);
   const files = component.files.filter((f) => f.content);
   const tree = useMemo(() => buildTree(files), [files]);
   const selected = files.find((f) => f.path === selectedFile) || files[0];
@@ -71,17 +67,8 @@ export function ComponentFileViewer({ component }: ComponentFileViewerProps) {
     }
   }, [files, selectedFile]);
 
-  const handleCopy = () => {
-    if (selected?.content) {
-      navigator.clipboard.writeText(selected.content);
-      setCopied(true);
-      toast.success("File content copied");
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
-
   return (
-    <Card className="p-0 gap-0">
+    <Card className="p-0 gap-0 border rounded-lg">
       <CardContent className="p-0">
         <ResizablePanelGroup direction="horizontal" className="min-h-[600px]">
           <ResizablePanel defaultSize={25} minSize={20} maxSize={40}>
@@ -97,12 +84,7 @@ export function ComponentFileViewer({ component }: ComponentFileViewerProps) {
           <ResizablePanel defaultSize={75} minSize={40}>
             {selected && (
               <div className="h-full flex flex-col">
-                <FileHeader
-                  file={selected}
-                  component={component}
-                  onCopy={handleCopy}
-                  copied={copied}
-                />
+                <FileHeader file={selected} component={component} />
 
                 <div className="flex-1 overflow-hidden">
                   <ScrollArea className="h-[calc(100vh-20rem)]">

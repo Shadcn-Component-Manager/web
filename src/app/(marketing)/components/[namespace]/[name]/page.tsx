@@ -2,9 +2,7 @@ import { ComponentFileViewer } from "@/components/components/component-file-view
 import { ComponentHeader } from "@/components/components/component-header";
 import { ComponentReadme } from "@/components/components/component-readme";
 import { ComponentSidebar } from "@/components/components/component-sidebar";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ApiComponent } from "@/lib/types";
-import { FileText } from "lucide-react";
 import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -138,22 +136,6 @@ export default async function ComponentPage({
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
         <div className="lg:col-span-3 space-y-6">
           <ComponentReadme component={component} />
-
-          {component.docs && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="h-5 w-5" />
-                  Setup Instructions
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <pre className="whitespace-pre-wrap text-sm bg-muted p-4 rounded-lg overflow-x-auto">
-                  {component.docs}
-                </pre>
-              </CardContent>
-            </Card>
-          )}
 
           <ComponentFileViewer component={component} />
         </div>

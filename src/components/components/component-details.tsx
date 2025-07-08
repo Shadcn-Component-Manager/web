@@ -66,10 +66,6 @@ export function ComponentDetails({ component }: ComponentDetailsProps) {
       </CardHeader>
       <CardContent>
         <div className="space-y-3 text-xs">
-          <DetailRow icon={<FileText className="h-3 w-3" />} label="Files">
-            <span className="font-medium">{component.files.length}</span>
-          </DetailRow>
-
           <DetailRow icon={<User className="h-3 w-3" />} label="Author">
             <TooltipProvider>
               <Tooltip>
@@ -94,17 +90,6 @@ export function ComponentDetails({ component }: ComponentDetailsProps) {
               </Tooltip>
             </TooltipProvider>
           </DetailRow>
-
-          {component.publishedAt && (
-            <DetailRow
-              icon={<Calendar className="h-3 w-3" />}
-              label="Published"
-            >
-              <span className="text-xs">
-                {formatDate(component.publishedAt)}
-              </span>
-            </DetailRow>
-          )}
 
           <DetailRow icon={<Github className="h-3 w-3" />} label="Source">
             <TooltipProvider>
@@ -132,6 +117,21 @@ export function ComponentDetails({ component }: ComponentDetailsProps) {
               </Tooltip>
             </TooltipProvider>
           </DetailRow>
+
+          <DetailRow icon={<FileText className="h-3 w-3" />} label="Files">
+            <span className="font-medium">{component.files.length}</span>
+          </DetailRow>
+
+          {component.publishedAt && (
+            <DetailRow
+              icon={<Calendar className="h-3 w-3" />}
+              label="Published"
+            >
+              <span className="text-xs">
+                {formatDate(component.publishedAt)}
+              </span>
+            </DetailRow>
+          )}
         </div>
       </CardContent>
     </Card>

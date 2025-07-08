@@ -1,7 +1,14 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/shared/copy-button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Select,
   SelectContent,
@@ -16,19 +23,15 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ApiComponent } from "@/lib/types";
-import { Check, Copy, FileText, Package } from "lucide-react";
+import { BookOpen, FileText, Package, Settings } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import { toast } from "sonner";
 
 interface ComponentReadmeProps {
   component: ApiComponent;
 }
 
 export function ComponentReadme({ component }: ComponentReadmeProps) {
-  const [copied, setCopied] = useState(false);
   const [selectedVersion, setSelectedVersion] = useState(component.version);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -37,16 +40,13 @@ export function ComponentReadme({ component }: ComponentReadmeProps) {
     f.path.toLowerCase().endsWith("readme.md"),
   );
 
-  const readmeContent =
-    readmeFile?.content || `# ${component.title}\n\n${component.description}`;
+  const readmeContent = readmeFile?.content;
 
-  const handleCopy = () => {
-    const command = `scm add ${component.author}/${component.name}`;
-    navigator.clipboard.writeText(command);
-    setCopied(true);
-    toast.success("Install command copied");
-    setTimeout(() => setCopied(false), 2000);
-  };
+  // Check if readme has content beyond just title and description
+  const hasExtendedContent =
+    readmeFile?.content &&
+    readmeFile.content.trim() !==
+      `# ${component.title}\n\n${component.description}`.trim();
 
   const handleVersionChange = (version: string) => {
     setSelectedVersion(version);
@@ -57,104 +57,52 @@ export function ComponentReadme({ component }: ComponentReadmeProps) {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <FileText className="h-5 w-5" />
-          Documentation
-        </CardTitle>
-      </CardHeader>
       <CardContent className="space-y-6">
-        {/* Readme Content */}
-        <div className="prose prose-stone dark:prose-invert max-w-none">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            components={{
-              // Custom styling for better mobile experience
-              h1: ({ children }) => (
-                <h1 className="text-2xl font-bold mb-4">{children}</h1>
-              ),
-              h2: ({ children }) => (
-                <h2 className="text-xl font-semibold mb-3 mt-6">{children}</h2>
-              ),
-              h3: ({ children }) => (
-                <h3 className="text-lg font-semibold mb-2 mt-4">{children}</h3>
-              ),
-              p: ({ children }) => (
-                <p className="mb-4 leading-relaxed">{children}</p>
-              ),
-              code: ({ children, className }) => (
-                <code
-                  className={`${className} bg-muted px-1 py-0.5 rounded text-sm font-mono`}
-                >
-                  {children}
-                </code>
-              ),
-              pre: ({ children }) => (
-                <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm mb-4">
-                  {children}
-                </pre>
-              ),
-              ul: ({ children }) => (
-                <ul className="list-disc list-inside mb-4 space-y-1">
-                  {children}
-                </ul>
-              ),
-              ol: ({ children }) => (
-                <ol className="list-decimal list-inside mb-4 space-y-1">
-                  {children}
-                </ol>
-              ),
-              li: ({ children }) => <li className="text-sm">{children}</li>,
-              blockquote: ({ children }) => (
-                <blockquote className="border-l-4 border-primary/20 pl-4 italic text-muted-foreground mb-4">
-                  {children}
-                </blockquote>
-              ),
-              a: ({ children, href }) => (
-                <a
-                  href={href}
-                  className="text-primary hover:underline underline-offset-2"
-                  target={href?.startsWith("http") ? "_blank" : undefined}
-                  rel={
-                    href?.startsWith("http") ? "noopener noreferrer" : undefined
-                  }
-                >
-                  {children}
-                </a>
-              ),
-            }}
+        {hasExtendedContent && readmeContent && (
+          <Accordion
+            type="single"
+            collapsible
+            className="w-full"
+            defaultValue="readme"
           >
-            {readmeContent}
-          </ReactMarkdown>
-        </div>
+            <AccordionItem value="readme" className="border rounded-lg">
+              <AccordionTrigger className="px-4 py-3 hover:no-underline">
+                <div className="flex items-center gap-2 text-left">
+                  <BookOpen className="h-4 w-4" />
+                  <span className="font-medium">Documentation</span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-4">
+                <ScrollArea className="h-[600px] w-full rounded-md border p-4">
+                  <div className="prose prose-stone dark:prose-invert max-w-none">
+                    <pre className="whitespace-pre-wrap text-sm font-mono leading-relaxed bg-transparent border-none p-0 m-0">
+                      {readmeContent}
+                    </pre>
+                  </div>
+                </ScrollArea>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        )}
 
         {/* Installation Section */}
-        <div className="border-t pt-6">
+        <div>
           <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
             <Package className="h-5 w-5" />
             Installation
           </h3>
 
           <div className="space-y-4">
-            <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+            <div className="flex items-center justify-between p-3 bg-muted rounded-lg border">
               <code className="text-sm font-mono flex-1 mr-2">
                 scm add {component.author}/{component.name}
               </code>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={handleCopy}
-                      className="h-8 w-8 p-0"
-                    >
-                      {copied ? (
-                        <Check className="h-3 w-3" />
-                      ) : (
-                        <Copy className="h-3 w-3" />
-                      )}
-                    </Button>
+                    <CopyButton
+                      text={`scm add ${component.author}/${component.name}`}
+                    />
                   </TooltipTrigger>
                   <TooltipContent>Copy install command</TooltipContent>
                 </Tooltip>
@@ -188,6 +136,30 @@ export function ComponentReadme({ component }: ComponentReadmeProps) {
                   </SelectContent>
                 </Select>
               </div>
+            )}
+
+            {/* Setup Instructions Accordion */}
+            {component.docs && (
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem
+                  value="setup-instructions"
+                  className="border rounded-lg"
+                >
+                  <AccordionTrigger className="px-4 py-3 hover:no-underline">
+                    <div className="flex items-center gap-2 text-left">
+                      <Settings className="h-4 w-4" />
+                      <span className="font-medium">Setup Instructions</span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-4 pb-4">
+                    <ScrollArea className="h-[300px] w-full rounded-md border p-3 bg-muted/30">
+                      <pre className="whitespace-pre-wrap text-xs font-mono leading-relaxed">
+                        {component.docs}
+                      </pre>
+                    </ScrollArea>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             )}
           </div>
         </div>

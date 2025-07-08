@@ -35,12 +35,6 @@ export function UserStats({ userComponents }: UserStatsProps) {
           allCategories.filter((v) => v === a).length,
       )[0]
     : null;
-  // For demo, let's use the first component's lastUpdated as 'joined' date
-  const joinedDate =
-    userComponents.length > 0
-      ? userComponents[userComponents.length - 1].lastUpdated
-      : "";
-  const daysSinceJoined = joinedDate ? getDaysSince(joinedDate) : "-";
 
   return (
     <div className="grid gap-6 sm:grid-cols-2">

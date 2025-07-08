@@ -10,9 +10,9 @@ interface AccountSidebarProps {
 
 export function AccountSidebar({ user }: AccountSidebarProps) {
   return (
-    <aside className="w-full lg:w-1/4 flex-shrink-0 space-y-6 mb-8 lg:mb-0">
+    <aside className="w-full flex-shrink-0 space-y-6 mb-8 lg:mb-0">
       <UserProfile user={user} />
-      <Card className="p-0 border bg-background">
+      <Card className="p-0 border">
         <div className="flex flex-col gap-2 p-4">
           <Button asChild variant="outline" className="w-full">
             <Link href={`/profile/${user.login}`}>

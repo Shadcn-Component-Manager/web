@@ -1,3 +1,4 @@
+import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -133,17 +134,7 @@ export default function PublishPage() {
             <div className="bg-muted p-4 rounded-lg font-mono text-sm">
               <div className="flex items-center justify-between mb-2">
                 <span>Install SCM CLI</span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() =>
-                    navigator.clipboard.writeText(
-                      "npm install -g @shadcn-component-manager/scm",
-                    )
-                  }
-                >
-                  Copy
-                </Button>
+                <CopyButton text="npm install -g @shadcn-component-manager/scm" />
               </div>
               <code>npm install -g @shadcn-component-manager/scm</code>
             </div>
@@ -174,15 +165,7 @@ export default function PublishPage() {
                   <div className="bg-muted p-4 rounded-lg">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-sm font-medium">Command</span>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() =>
-                          navigator.clipboard.writeText(step.command)
-                        }
-                      >
-                        Copy
-                      </Button>
+                      <CopyButton text={step.command} />
                     </div>
                     <code className="text-sm">{step.command}</code>
                   </div>

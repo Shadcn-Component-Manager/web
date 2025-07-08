@@ -62,7 +62,7 @@ export const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
             {isActive && (
               <motion.div
                 layoutId="activeTheme"
-                className="absolute inset-0 rounded-full bg-accent"
+                className="absolute inset-0 rounded-full border border-primary bg-primary/20"
                 transition={{ type: "spring", duration: 0.5 }}
               />
             )}

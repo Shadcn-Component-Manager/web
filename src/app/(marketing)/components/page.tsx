@@ -1,3 +1,4 @@
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ApiComponent } from "@/lib/types";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -54,51 +55,61 @@ export default async function ComponentsPage() {
         {components.length === 0
           ? // Show skeleton loading when no components
             [...Array(9)].map((_, i) => (
-              <div
-                key={i}
-                className="rounded-lg border bg-card p-4 animate-pulse"
-              >
-                <div className="flex justify-between mb-2">
-                  <div className="h-5 w-2/3 bg-muted rounded" />
-                  <div className="h-4 w-12 bg-muted rounded" />
-                </div>
-                <div className="h-4 w-full bg-muted rounded mt-3" />
-              </div>
+              <Card key={i} className="animate-pulse">
+                <CardHeader className="pb-3">
+                  <div className="flex justify-between items-start">
+                    <div className="h-5 w-2/3 bg-muted rounded" />
+                    <div className="h-4 w-12 bg-muted rounded" />
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <div className="h-4 w-full bg-muted rounded" />
+                </CardContent>
+              </Card>
             ))
           : components.map((component) => (
               <Link
                 key={component.name}
                 href={`/components/${component.author}/${component.name}`}
-                className="rounded-lg border bg-card p-4 hover:bg-muted/50 transition-colors group"
+                className="group"
               >
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-semibold group-hover:text-primary transition-colors">
-                    {component.author}/{component.name}
-                  </h3>
-                  <span className="text-sm text-muted-foreground bg-muted px-2 py-1 rounded">
-                    v{component.version}
-                  </span>
-                </div>
-                <p className="text-sm text-muted-foreground line-clamp-2">
-                  {component.description}
-                </p>
-                {component.categories && component.categories.length > 0 && (
-                  <div className="flex gap-1 mt-3 flex-wrap">
-                    {component.categories.slice(0, 3).map((category, index) => (
-                      <span
-                        key={index}
-                        className="text-xs bg-primary/10 text-primary px-2 py-1 rounded"
-                      >
-                        {category}
+                <Card className="hover:bg-muted/50 transition-colors h-full">
+                  <CardHeader className="pb-3">
+                    <div className="flex justify-between items-start">
+                      <h3 className="font-semibold group-hover:text-primary transition-colors">
+                        {component.author}/{component.name}
+                      </h3>
+                      <span className="text-sm text-muted-foreground bg-muted px-2 py-1 rounded">
+                        v{component.version}
                       </span>
-                    ))}
-                    {component.categories.length > 3 && (
-                      <span className="text-xs text-muted-foreground">
-                        +{component.categories.length - 3}
-                      </span>
-                    )}
-                  </div>
-                )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
+                      {component.description}
+                    </p>
+                    {component.categories &&
+                      component.categories.length > 0 && (
+                        <div className="flex gap-1 flex-wrap">
+                          {component.categories
+                            .slice(0, 3)
+                            .map((category, index) => (
+                              <span
+                                key={index}
+                                className="text-xs bg-primary/10 text-primary px-2 py-1 rounded"
+                              >
+                                {category}
+                              </span>
+                            ))}
+                          {component.categories.length > 3 && (
+                            <span className="text-xs text-muted-foreground">
+                              +{component.categories.length - 3}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                  </CardContent>
+                </Card>
               </Link>
             ))}
       </div>

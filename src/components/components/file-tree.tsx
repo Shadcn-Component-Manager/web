@@ -81,7 +81,7 @@ export function FileTree({ tree, selectedFile, onFileSelect }: FileTreeProps) {
 
   return (
     <div className="w-full h-full border-r">
-      <div className="p-3 border-b">
+      <div className="p-3 border-b bg-muted/50">
         <div className="flex items-center gap-2">
           <FileCode className="h-4 w-4" />
           <span className="text-sm font-medium">Files</span>

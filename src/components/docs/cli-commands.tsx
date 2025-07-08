@@ -1,7 +1,7 @@
 "use client";
 
+import { CopyButton } from "@/components/shared/copy-button";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -15,9 +15,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Check, Copy, Terminal } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
+import { Terminal } from "lucide-react";
 
 const cliCommands = [
   {
@@ -59,19 +57,6 @@ const cliCommands = [
 ];
 
 export function CliCommands() {
-  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
-
-  const handleCopy = async (command: string, index: number) => {
-    try {
-      await navigator.clipboard.writeText(command);
-      setCopiedIndex(index);
-      toast.success("Command copied to clipboard");
-      setTimeout(() => setCopiedIndex(null), 2000);
-    } catch (error) {
-      toast.error("Failed to copy command");
-    }
-  };
-
   return (
     <Card>
       <CardHeader>
@@ -97,22 +82,9 @@ export function CliCommands() {
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleCopy(cmd.command, index)}
-                        className="h-8 w-8 p-0"
-                      >
-                        {copiedIndex === index ? (
-                          <Check className="h-4 w-4" />
-                        ) : (
-                          <Copy className="h-4 w-4" />
-                        )}
-                      </Button>
+                      <CopyButton text={cmd.command} />
                     </TooltipTrigger>
-                    <TooltipContent>
-                      {copiedIndex === index ? "Copied!" : "Copy command"}
-                    </TooltipContent>
+                    <TooltipContent>Copy command</TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
               </div>
