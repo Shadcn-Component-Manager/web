@@ -121,11 +121,15 @@ export default async function ComponentsPage() {
             <p className="text-lg font-medium">No components found</p>
             <p className="text-sm">Be the first to publish a component!</p>
           </div>
-          <Link href="/publish">
+          <a
+            href="https://scm.mintlify.app/cli/publish"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <button className="bg-primary text-primary-foreground px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors">
               Publish Your First Component
             </button>
-          </Link>
+          </a>
         </div>
       )}
     </div>

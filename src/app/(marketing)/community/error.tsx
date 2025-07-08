@@ -83,10 +83,22 @@ export default function CommunityError({ error, reset }: ErrorProps) {
                   <Link href="/components">Browse Components</Link>
                 </Button>
                 <Button variant="ghost" size="sm" asChild>
-                  <Link href="/docs">View Documentation</Link>
+                  <a
+                    href="https://scm.mintlify.app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View Documentation
+                  </a>
                 </Button>
                 <Button variant="ghost" size="sm" asChild>
-                  <Link href="/publish">Publish Component</Link>
+                  <a
+                    href="https://scm.mintlify.app/cli/publish"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Publish Component
+                  </a>
                 </Button>
               </div>
             </div>

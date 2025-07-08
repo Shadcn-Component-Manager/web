@@ -24,8 +24,6 @@ export async function middleware(request: NextRequest) {
     "/auth/sign-out",
     "/components",
     "/community",
-    "/docs",
-    "/publish",
     "/terms",
     "/privacy",
     "/license",

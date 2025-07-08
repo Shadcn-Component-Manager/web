@@ -21,17 +21,6 @@ export function MainNav() {
         Components
       </Link>
       <Link
-        href="/docs"
-        className={cn(
-          "transition-colors hover:text-foreground/80",
-          pathname?.startsWith("/docs")
-            ? "text-foreground"
-            : "text-foreground/60",
-        )}
-      >
-        Docs
-      </Link>
-      <Link
         href="/community"
         className={cn(
           "transition-colors hover:text-foreground/80",
@@ -42,6 +31,14 @@ export function MainNav() {
       >
         Community
       </Link>
+      <a
+        href="https://scm.mintlify.app"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="transition-colors hover:text-foreground/80 text-foreground/60"
+      >
+        Docs
+      </a>
     </nav>
   );
 }

@@ -31,10 +31,14 @@ export function AccountSidebar({ user }: AccountSidebarProps) {
             </Link>
           </Button>
           <Button asChild className="w-full">
-            <Link href="/publish">
+            <a
+              href="https://scm.mintlify.app/cli/publish"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Plus className="h-4 w-4 mr-2" />
               Publish Component
-            </Link>
+            </a>
           </Button>
         </div>
       </Card>

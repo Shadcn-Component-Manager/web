@@ -34,10 +34,14 @@ export function AccountComponents({
             community.
           </p>
           <Button asChild>
-            <Link href="/publish">
+            <a
+              href="https://scm.mintlify.app/cli/publish"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Plus className="h-4 w-4 mr-2" />
               Publish Your First Component
-            </Link>
+            </a>
           </Button>
         </CardContent>
       </Card>

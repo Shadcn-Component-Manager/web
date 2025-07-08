@@ -248,12 +248,20 @@ export default async function CommunityPage() {
           shadcn-compatible components.
         </p>
         <div className="flex gap-4 justify-center">
-          <Link href="/publish">
+          <a
+            href="https://scm.mintlify.app/cli/publish"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Button>Publish Your First Component</Button>
-          </Link>
-          <Link href="/docs">
+          </a>
+          <a
+            href="https://scm.mintlify.app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Button variant="outline">Read Documentation</Button>
-          </Link>
+          </a>
         </div>
       </div>
     </div>

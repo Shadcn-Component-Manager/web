@@ -51,24 +51,28 @@ export function SiteFooter() {
           >
             Components
           </Link>
-          <Link
-            href="/docs"
+          <a
+            href="https://scm.mintlify.app"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-muted-foreground hover:text-foreground transition-colors text-sm"
           >
             Docs
-          </Link>
+          </a>
           <Link
             href="/community"
             className="text-muted-foreground hover:text-foreground transition-colors text-sm"
           >
             Community
           </Link>
-          <Link
-            href="/publish"
+          <a
+            href="https://scm.mintlify.app/cli/publish"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-muted-foreground hover:text-foreground transition-colors text-sm"
           >
             Publish
-          </Link>
+          </a>
         </div>
         {/* Repositories */}
         <div className="flex flex-col items-center md:items-start gap-2 flex-1 min-w-[180px]">
