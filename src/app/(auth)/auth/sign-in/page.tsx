@@ -67,8 +67,8 @@ export default function SignInPage() {
     setIsLoading(true);
     try {
       const clientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
-      const redirectUri = `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirect)}`;
-      const scope = "read:user user:email";
+      const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/auth/callback?next=${encodeURIComponent(redirect)}`;
+      const scope = "repo read:user user:email";
 
       const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}`;
 
