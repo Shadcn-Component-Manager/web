@@ -178,15 +178,6 @@ export default function SignInPage() {
                   Privacy Policy
                 </Link>
               </p>
-
-              <div className="text-sm text-muted-foreground">
-                <Link
-                  href="/help"
-                  className="text-primary hover:text-primary/80 font-medium transition-colors"
-                >
-                  Need help? View documentation
-                </Link>
-              </div>
             </motion.div>
           </CardContent>
         </Card>
