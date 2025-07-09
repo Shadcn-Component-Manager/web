@@ -20,37 +20,71 @@ export async function middleware(request: NextRequest) {
   const publicRoutes = [
     "/",
     "/auth/sign-in",
-    "/auth/callback",
+    "/auth/callback", 
     "/auth/sign-out",
+    "/profile",
     "/components",
     "/community",
     "/terms",
     "/privacy",
     "/license",
+    "/error",
+    "/not-found",
+    "/loading",
+  ];
+
+  // Public route patterns (for dynamic routes)
+  const publicRoutePatterns = [
+    /^\/components\/[^\/]+\/[^\/]+$/, // /components/[namespace]/[name]
+    /^\/profile\/[^\/]+$/, // /profile/[username]
   ];
 
   // Check if current path is public
   const isPublicRoute = publicRoutes.some(
     (route) => pathname === route || pathname.startsWith(`${route}/`),
-  );
+  ) || publicRoutePatterns.some(pattern => pattern.test(pathname));
 
-  // API routes that don't require authentication
-  const publicApiRoutes = ["/api/components", "/api/profile"];
+  // API routes that don't require authentication (public APIs)
+  const publicApiRoutes = [
+    "/api/components",
+    "/api/profile", 
+    "/api/og/component",
+    "/api/og/profile",
+  ];
+
+  // API route patterns (for dynamic API routes)
+  const publicApiRoutePatterns = [
+    /^\/api\/components\/[^\/]+\/[^\/]+$/, // /api/components/[namespace]/[name]
+    /^\/api\/profile\/[^\/]+$/, // /api/profile/[username]
+  ];
 
   const isPublicApiRoute = publicApiRoutes.some((route) =>
     pathname.startsWith(route),
-  );
+  ) || publicApiRoutePatterns.some(pattern => pattern.test(pathname));
 
   // If it's a public route or public API route, allow access
   if (isPublicRoute || isPublicApiRoute) {
     return NextResponse.next();
   }
 
+  // Protected routes that require authentication
+  const protectedRoutes = [
+    "/account",
+    "/api/user",
+  ];
+
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    pathname === route || pathname.startsWith(`${route}/`),
+  );
+
   // If user is not authenticated and trying to access protected routes
-  if (!hasValidSession) {
+  if (!hasValidSession && isProtectedRoute) {
     // For API routes, return 401
     if (pathname.startsWith("/api/")) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json(
+        { error: "Unauthorized", message: "Authentication required" }, 
+        { status: 401 }
+      );
     }
 
     // For other routes, redirect to sign-in
@@ -64,6 +98,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/account", request.url));
   }
 
+  // Allow all other routes to pass through
   return NextResponse.next();
 }
 
