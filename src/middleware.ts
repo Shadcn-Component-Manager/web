@@ -20,7 +20,7 @@ export async function middleware(request: NextRequest) {
   const publicRoutes = [
     "/",
     "/auth/sign-in",
-    "/auth/callback", 
+    "/auth/callback",
     "/auth/sign-out",
     "/profile",
     "/components",
@@ -40,16 +40,18 @@ export async function middleware(request: NextRequest) {
   ];
 
   // Check if current path is public
-  const isPublicRoute = publicRoutes.some(
-    (route) => pathname === route || pathname.startsWith(`${route}/`),
-  ) || publicRoutePatterns.some(pattern => pattern.test(pathname));
+  const isPublicRoute =
+    publicRoutes.some(
+      (route) => pathname === route || pathname.startsWith(`${route}/`),
+    ) || publicRoutePatterns.some((pattern) => pattern.test(pathname));
 
   // API routes that don't require authentication (public APIs)
   const publicApiRoutes = [
     "/api/components",
-    "/api/profile", 
+    "/api/profile",
     "/api/og/component",
     "/api/og/profile",
+    "/api/user",
   ];
 
   // API route patterns (for dynamic API routes)
@@ -58,9 +60,9 @@ export async function middleware(request: NextRequest) {
     /^\/api\/profile\/[^\/]+$/, // /api/profile/[username]
   ];
 
-  const isPublicApiRoute = publicApiRoutes.some((route) =>
-    pathname.startsWith(route),
-  ) || publicApiRoutePatterns.some(pattern => pattern.test(pathname));
+  const isPublicApiRoute =
+    publicApiRoutes.some((route) => pathname.startsWith(route)) ||
+    publicApiRoutePatterns.some((pattern) => pattern.test(pathname));
 
   // If it's a public route or public API route, allow access
   if (isPublicRoute || isPublicApiRoute) {
@@ -68,13 +70,10 @@ export async function middleware(request: NextRequest) {
   }
 
   // Protected routes that require authentication
-  const protectedRoutes = [
-    "/account",
-    "/api/user",
-  ];
+  const protectedRoutes = ["/account"];
 
-  const isProtectedRoute = protectedRoutes.some((route) =>
-    pathname === route || pathname.startsWith(`${route}/`),
+  const isProtectedRoute = protectedRoutes.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`),
   );
 
   // If user is not authenticated and trying to access protected routes
@@ -82,8 +81,8 @@ export async function middleware(request: NextRequest) {
     // For API routes, return 401
     if (pathname.startsWith("/api/")) {
       return NextResponse.json(
-        { error: "Unauthorized", message: "Authentication required" }, 
-        { status: 401 }
+        { error: "Unauthorized", message: "Authentication required" },
+        { status: 401 },
       );
     }
 
